@@ -16,6 +16,23 @@ curl -X POST "https://php-syntax-checker.fos.gg/?version=7.4" -F file=@/FroshToo
 curl -X POST "https://php-syntax-checker.fos.gg/?version=8.1" -F file=@/FroshTools.zip
 ```
 
+## Responses
+
+### Success
+
+HTTP Status: 200
+
+```json
+{"message": "All files are valid"}
+```
+
+### Error
+
+HTTP Status: 409
+
+```json
+{"errors":["File FroshTools/src/Command/ChangeUserPasswordCommand.php: \nParse error: syntax error, unexpected 'EntityRepositoryInterface' (T_STRING), expecting function (T_FUNCTION) or const (T_CONST) in /tmp/php-syntax-checker1065232478 on line 20\nErrors parsing /tmp/php-syntax-checker1065232478\n"]}
+```
 
 ## Compile PHP
 

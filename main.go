@@ -85,10 +85,18 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 			errors := validateAllFiles(fileContent, phpExecuteable)
 
+			if len(errors) == 0 {
+				return events.APIGatewayProxyResponse{
+					StatusCode: http.StatusOK,
+					Headers:    map[string]string{"Content-Type": "application/json"},
+					Body:       `{"message": "All files are valid"}`,
+				}, nil
+			}
+
 			msg, _ := json.Marshal(map[string][]string{"errors": errors})
 
 			return events.APIGatewayProxyResponse{
-				StatusCode: http.StatusOK,
+				StatusCode: http.StatusConflict,
 				Headers:    map[string]string{"Content-Type": "application/json"},
 				Body:       string(msg),
 			}, nil
